@@ -1,0 +1,12 @@
+apiVersion: v1
+imagePullSecrets:
+- name: affine-sa-dockercfg-mzznl
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2024-09-14T07:07:53Z"
+  name: affine-sa
+  namespace: affine
+  resourceVersion: "576337"
+  uid: bec6fcc6-0e45-4515-a49e-a285d3402422
+secrets:
+- name: affine-sa-dockercfg-mzznl

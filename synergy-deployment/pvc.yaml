@@ -1,0 +1,97 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      io.kompose.service: affine-claim0
+    name: affine-claim0
+    namespace: synergy
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+    storageClassName: nfs-storage
+    volumeMode: Filesystem
+    volumeName: pvc-6e83ba56-c8a6-449b-a3a8-4e1f3b0f5bab
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 100Mi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      io.kompose.service: affine-claim1
+    name: affine-claim1
+    namespace: synergy
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+    storageClassName: nfs-storage
+    volumeMode: Filesystem
+    volumeName: pvc-0417bb44-ceda-4298-b016-d3008f605286
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 100Mi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      io.kompose.service: postgres-claim0
+    name: postgres-claim0
+    namespace: synergy
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+    storageClassName: nfs-storage
+    volumeMode: Filesystem
+    volumeName: pvc-e6649b24-bd98-463f-8d66-464f982025f7
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 100Mi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      io.kompose.service: redis-claim0
+    name: redis-claim0
+    namespace: synergy
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+    storageClassName: nfs-storage
+    volumeMode: Filesystem
+    volumeName: pvc-2f9fa06a-8eac-47ea-9dc0-339a0ff47afa
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 100Mi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

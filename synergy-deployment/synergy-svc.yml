@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: affine
+  name: affine
+  namespace: synergy
+spec:
+  ports:
+  - name: "3010"
+    port: 3010
+    protocol: TCP
+    targetPort: 3010
+  - name: "5555"
+    port: 5555
+    protocol: TCP
+    targetPort: 5555
+  selector:
+    io.kompose.service: affine
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
