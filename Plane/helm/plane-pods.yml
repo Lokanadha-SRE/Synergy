@@ -1,0 +1,2206 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.80/23"],"mac_address":"0a:58:0a:08:00:50","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.80/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.80"
+            ],
+            "mac": "0a:58:0a:08:00:50",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+      timestamp: 2024-10-09 07:51:46.748477313 -0400 EDT m=+1.094316411
+    creationTimestamp: "2024-10-09T12:22:13Z"
+    generateName: plane-app-admin-wl-7b9d6bbdcd-
+    labels:
+      app.name: plane-plane-app-admin
+      pod-template-hash: 7b9d6bbdcd
+    name: plane-app-admin-wl-7b9d6bbdcd-lm4bq
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: plane-app-admin-wl-7b9d6bbdcd
+      uid: aec7b186-0dc1-418d-a20a-cb7001b92d42
+    resourceVersion: "340258"
+    uid: e2bac4cf-8c5e-46c3-93f6-f7bfa97ec364
+  spec:
+    containers:
+    - args:
+      - admin/server.js
+      - admin
+      command:
+      - node
+      image: quay.io/p_lokanath/plane-admin:stable
+      imagePullPolicy: Always
+      name: plane-app-admin
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1000Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cns59
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-cns59
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:22:13Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:22:16Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:22:16Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:22:13Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://1d335e2a1a92e3df56424aa95380246724ca11030d6f1884c67f20aba5709815
+      image: quay.io/p_lokanath/plane-admin:stable
+      imageID: quay.io/p_lokanath/plane-admin@sha256:3fb3468a2df6839ebc86f56aa45fb68f6d14d3478db37832df348c5b233382e5
+      lastState: {}
+      name: plane-app-admin
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-10-09T12:22:15Z"
+    hostIP: 192.168.50.10
+    phase: Running
+    podIP: 10.8.0.80
+    podIPs:
+    - ip: 10.8.0.80
+    qosClass: Burstable
+    startTime: "2024-10-09T12:22:13Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.70/23"],"mac_address":"0a:58:0a:08:00:46","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.70/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.70"
+            ],
+            "mac": "0a:58:0a:08:00:46",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+      timestamp: 2024-10-09 07:51:46.748357653 -0400 EDT m=+1.094196752
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    finalizers:
+    - batch.kubernetes.io/job-tracking
+    generateName: plane-app-api-migrate-1-
+    labels:
+      app.name: plane-plane-app-api-migrate
+      batch.kubernetes.io/controller-uid: 8864ef00-2868-4ade-b87d-d42b3ea2abec
+      batch.kubernetes.io/job-name: plane-app-api-migrate-1
+      controller-uid: 8864ef00-2868-4ade-b87d-d42b3ea2abec
+      job-name: plane-app-api-migrate-1
+    name: plane-app-api-migrate-1-w2gb7
+    namespace: plane
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: plane-app-api-migrate-1
+      uid: 8864ef00-2868-4ade-b87d-d42b3ea2abec
+    resourceVersion: "349274"
+    uid: f2a0fa4d-a503-459b-9dc7-251f468c10cb
+  spec:
+    containers:
+    - command:
+      - ./bin/docker-entrypoint-migrator.sh
+      envFrom:
+      - configMapRef:
+          name: plane-app-app-vars
+          optional: false
+      - secretRef:
+          name: plane-app-app-secrets
+          optional: false
+      - configMapRef:
+          name: plane-app-doc-store-vars
+          optional: false
+      - secretRef:
+          name: plane-app-doc-store-secrets
+          optional: false
+      image: makeplane/plane-backend:stable
+      imagePullPolicy: Always
+      name: plane-app-api-migrate
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-hmhfd
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: OnFailure
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-hmhfd
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: 'containers with unready status: [plane-app-api-migrate]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: 'containers with unready status: [plane-app-api-migrate]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - image: makeplane/plane-backend:stable
+      imageID: ""
+      lastState: {}
+      name: plane-app-api-migrate
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        waiting:
+          message: Back-off pulling image "makeplane/plane-backend:stable"
+          reason: ImagePullBackOff
+    hostIP: 192.168.50.10
+    phase: Pending
+    podIP: 10.8.0.70
+    podIPs:
+    - ip: 10.8.0.70
+    qosClass: BestEffort
+    startTime: "2024-10-09T11:51:47Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.100/23"],"mac_address":"0a:58:0a:08:00:64","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.100/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.100"
+            ],
+            "mac": "0a:58:0a:08:00:64",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+      timestamp: 2024-10-09 07:51:46.748445207 -0400 EDT m=+1.094284305
+    creationTimestamp: "2024-10-09T12:23:02Z"
+    generateName: plane-app-api-wl-57ffd99b85-
+    labels:
+      app.name: plane-plane-app-api
+      pod-template-hash: 57ffd99b85
+    name: plane-app-api-wl-57ffd99b85-fbjbc
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: plane-app-api-wl-57ffd99b85
+      uid: 6e163585-d589-4883-b18f-810e2a26e92f
+    resourceVersion: "349674"
+    uid: 9ba2e9ae-c185-45e9-aeee-ec15f8678853
+  spec:
+    containers:
+    - command:
+      - ./bin/docker-entrypoint-api.sh
+      envFrom:
+      - configMapRef:
+          name: plane-app-app-vars
+          optional: false
+      - secretRef:
+          name: plane-app-app-secrets
+          optional: false
+      - configMapRef:
+          name: plane-app-doc-store-vars
+          optional: false
+      - secretRef:
+          name: plane-app-doc-store-secrets
+          optional: false
+      image: quay.io/p_lokanath/plane-backend:stable
+      imagePullPolicy: Always
+      name: plane-app-api
+      readinessProbe:
+        failureThreshold: 30
+        httpGet:
+          path: /
+          port: 8000
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1000Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qmmtt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-qmmtt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:23:02Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:23:02Z"
+      message: 'containers with unready status: [plane-app-api]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:23:02Z"
+      message: 'containers with unready status: [plane-app-api]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:23:02Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://3a62965ef53ef782842386c3d390c71cb74d1b04dba6c4ad880ddbbffc1bf5ef
+      image: quay.io/p_lokanath/plane-backend:stable
+      imageID: quay.io/p_lokanath/plane-backend@sha256:55a6f4dc8aa944ee9ad397559778c13df97725b3d96db9ef594a1b31eeed7bbf
+      lastState:
+        terminated:
+          containerID: cri-o://3a62965ef53ef782842386c3d390c71cb74d1b04dba6c4ad880ddbbffc1bf5ef
+          exitCode: 1
+          finishedAt: "2024-10-09T12:42:13Z"
+          reason: Error
+          startedAt: "2024-10-09T12:41:55Z"
+      name: plane-app-api
+      ready: false
+      restartCount: 8
+      started: false
+      state:
+        waiting:
+          message: back-off 5m0s restarting failed container=plane-app-api pod=plane-app-api-wl-57ffd99b85-fbjbc_plane(9ba2e9ae-c185-45e9-aeee-ec15f8678853)
+          reason: CrashLoopBackOff
+    hostIP: 192.168.50.10
+    phase: Running
+    podIP: 10.8.0.100
+    podIPs:
+    - ip: 10.8.0.100
+    qosClass: Burstable
+    startTime: "2024-10-09T12:23:02Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.61/23"],"mac_address":"0a:58:0a:08:00:3d","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.61/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.61"
+            ],
+            "mac": "0a:58:0a:08:00:3d",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+      timestamp: 2024-10-09 07:51:46.748445207 -0400 EDT m=+1.094284305
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    generateName: plane-app-api-wl-777fd7564c-
+    labels:
+      app.name: plane-plane-app-api
+      pod-template-hash: 777fd7564c
+    name: plane-app-api-wl-777fd7564c-ssmnm
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: plane-app-api-wl-777fd7564c
+      uid: 06122aa4-33a9-483e-b56c-3bf82db21bd6
+    resourceVersion: "349052"
+    uid: 314de648-ae21-4573-99d8-a4866a6ae196
+  spec:
+    containers:
+    - command:
+      - ./bin/docker-entrypoint-api.sh
+      envFrom:
+      - configMapRef:
+          name: plane-app-app-vars
+          optional: false
+      - secretRef:
+          name: plane-app-app-secrets
+          optional: false
+      - configMapRef:
+          name: plane-app-doc-store-vars
+          optional: false
+      - secretRef:
+          name: plane-app-doc-store-secrets
+          optional: false
+      image: makeplane/plane-backend:stable
+      imagePullPolicy: Always
+      name: plane-app-api
+      readinessProbe:
+        failureThreshold: 30
+        httpGet:
+          path: /
+          port: 8000
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1000Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4r72q
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-4r72q
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: 'containers with unready status: [plane-app-api]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: 'containers with unready status: [plane-app-api]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - image: makeplane/plane-backend:stable
+      imageID: ""
+      lastState: {}
+      name: plane-app-api
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        waiting:
+          message: Back-off pulling image "makeplane/plane-backend:stable"
+          reason: ImagePullBackOff
+    hostIP: 192.168.50.10
+    phase: Pending
+    podIP: 10.8.0.61
+    podIPs:
+    - ip: 10.8.0.61
+    qosClass: Burstable
+    startTime: "2024-10-09T11:51:47Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.102/23"],"mac_address":"0a:58:0a:08:00:66","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.102/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.102"
+            ],
+            "mac": "0a:58:0a:08:00:66",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+      timestamp: 2024-10-09 07:51:46.748413622 -0400 EDT m=+1.094252721
+    creationTimestamp: "2024-10-09T12:24:00Z"
+    generateName: plane-app-beat-worker-wl-67986b5548-
+    labels:
+      app.name: plane-plane-app-beat-worker
+      pod-template-hash: 67986b5548
+    name: plane-app-beat-worker-wl-67986b5548-psvjr
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: plane-app-beat-worker-wl-67986b5548
+      uid: a9b8c748-5abf-4cfa-b8df-102e7ca9c17f
+    resourceVersion: "350086"
+    uid: daf62441-8c12-46e0-972c-f605126ac0c7
+  spec:
+    containers:
+    - command:
+      - ./bin/docker-entrypoint-beat.sh
+      envFrom:
+      - configMapRef:
+          name: plane-app-app-vars
+          optional: false
+      - secretRef:
+          name: plane-app-app-secrets
+          optional: false
+      - configMapRef:
+          name: plane-app-doc-store-vars
+          optional: false
+      - secretRef:
+          name: plane-app-doc-store-secrets
+          optional: false
+      image: quay.io/p_lokanath/plane-backend:stable
+      imagePullPolicy: Always
+      name: plane-app-beat-worker
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1000Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9dg48
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-9dg48
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:24:00Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:43:13Z"
+      message: 'containers with unready status: [plane-app-beat-worker]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:43:13Z"
+      message: 'containers with unready status: [plane-app-beat-worker]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:24:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://23efe130f2fb45fff0220f38a12b298f5136be52ffa5fc423b5e8e3e6bcc1f33
+      image: quay.io/p_lokanath/plane-backend:stable
+      imageID: quay.io/p_lokanath/plane-backend@sha256:55a6f4dc8aa944ee9ad397559778c13df97725b3d96db9ef594a1b31eeed7bbf
+      lastState:
+        terminated:
+          containerID: cri-o://23efe130f2fb45fff0220f38a12b298f5136be52ffa5fc423b5e8e3e6bcc1f33
+          exitCode: 1
+          finishedAt: "2024-10-09T12:43:12Z"
+          reason: Error
+          startedAt: "2024-10-09T12:42:54Z"
+      name: plane-app-beat-worker
+      ready: false
+      restartCount: 8
+      started: false
+      state:
+        waiting:
+          message: back-off 5m0s restarting failed container=plane-app-beat-worker
+            pod=plane-app-beat-worker-wl-67986b5548-psvjr_plane(daf62441-8c12-46e0-972c-f605126ac0c7)
+          reason: CrashLoopBackOff
+    hostIP: 192.168.50.10
+    phase: Running
+    podIP: 10.8.0.102
+    podIPs:
+    - ip: 10.8.0.102
+    qosClass: Burstable
+    startTime: "2024-10-09T12:24:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.103/23"],"mac_address":"0a:58:0a:08:00:67","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.103/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.103"
+            ],
+            "mac": "0a:58:0a:08:00:67",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+      timestamp: 2024-10-09 07:51:46.74838907 -0400 EDT m=+1.094228169
+    creationTimestamp: "2024-10-09T12:24:46Z"
+    generateName: plane-app-live-wl-84ff5f8759-
+    labels:
+      app.name: plane-plane-app-live
+      pod-template-hash: 84ff5f8759
+    name: plane-app-live-wl-84ff5f8759-pgclz
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: plane-app-live-wl-84ff5f8759
+      uid: b55ad3b3-f659-4678-b0f1-618783bcd53f
+    resourceVersion: "341541"
+    uid: 74693c3f-96c7-4ccd-807c-1b522886e27d
+  spec:
+    containers:
+    - args:
+      - live/dist/server.js
+      command:
+      - node
+      envFrom:
+      - configMapRef:
+          name: plane-app-live-vars
+          optional: false
+      image: quay.io/p_lokanath/plane-live:stable
+      imagePullPolicy: Always
+      name: plane-app-live
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1000Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-64vj9
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-64vj9
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:24:46Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:24:50Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:24:50Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:24:46Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://0d4802f588588462bcb5cc80128507de0cb532f74da2cc56be36e23213fb60cb
+      image: quay.io/p_lokanath/plane-live:stable
+      imageID: quay.io/p_lokanath/plane-live@sha256:c3de1455bf76b0dd738972c408fc9547bc88434711bbccae493adbd500d52cba
+      lastState: {}
+      name: plane-app-live
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-10-09T12:24:49Z"
+    hostIP: 192.168.50.10
+    phase: Running
+    podIP: 10.8.0.103
+    podIPs:
+    - ip: 10.8.0.103
+    qosClass: Burstable
+    startTime: "2024-10-09T12:24:46Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.66/23"],"mac_address":"0a:58:0a:08:00:42","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.66/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.66"
+            ],
+            "mac": "0a:58:0a:08:00:42",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    finalizers:
+    - batch.kubernetes.io/job-tracking
+    generateName: plane-app-minio-bucket-
+    labels:
+      batch.kubernetes.io/controller-uid: 7a9d4df8-bf91-4ceb-8a82-458cd8835c4a
+      batch.kubernetes.io/job-name: plane-app-minio-bucket
+      controller-uid: 7a9d4df8-bf91-4ceb-8a82-458cd8835c4a
+      job-name: plane-app-minio-bucket
+    name: plane-app-minio-bucket-s2cbs
+    namespace: plane
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: plane-app-minio-bucket
+      uid: 7a9d4df8-bf91-4ceb-8a82-458cd8835c4a
+    resourceVersion: "349616"
+    uid: 458139ab-03be-4d30-abbf-dd5a3ea4126b
+  spec:
+    containers:
+    - args:
+      - -c
+      - /usr/bin/mc config host add plane-app-minio http://plane-app-minio.plane.svc.cluster.local:9000
+        "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY";  /usr/bin/mc mb plane-app-minio/$AWS_S3_BUCKET_NAME;  /usr/bin/mc
+        anonymous set download plane-app-minio/$AWS_S3_BUCKET_NAME; exit 0;
+      command:
+      - /bin/sh
+      envFrom:
+      - configMapRef:
+          name: plane-app-doc-store-vars
+          optional: false
+      - secretRef:
+          name: plane-app-doc-store-secrets
+          optional: false
+      image: minio/mc
+      imagePullPolicy: IfNotPresent
+      name: plane-app-minio-bucket
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-knmjn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    initContainers:
+    - command:
+      - sh
+      - -c
+      - until nslookup  plane-app-minio.plane.svc.cluster.local; do echo waiting for  plane-app-minio;
+        sleep 2; done
+      image: busybox
+      imagePullPolicy: Always
+      name: init
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-knmjn
+        readOnly: true
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: OnFailure
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 120
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-knmjn
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: 'containers with incomplete status: [init]'
+      reason: ContainersNotInitialized
+      status: "False"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: 'containers with unready status: [plane-app-minio-bucket]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: 'containers with unready status: [plane-app-minio-bucket]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - image: minio/mc
+      imageID: ""
+      lastState: {}
+      name: plane-app-minio-bucket
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        waiting:
+          reason: PodInitializing
+    hostIP: 192.168.50.10
+    initContainerStatuses:
+    - image: busybox
+      imageID: ""
+      lastState: {}
+      name: init
+      ready: false
+      restartCount: 0
+      state:
+        waiting:
+          message: Back-off pulling image "busybox"
+          reason: ImagePullBackOff
+    phase: Pending
+    podIP: 10.8.0.66
+    podIPs:
+    - ip: 10.8.0.66
+    qosClass: BestEffort
+    startTime: "2024-10-09T11:51:47Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    generateName: plane-app-minio-wl-
+    labels:
+      app.name: plane-plane-app-minio
+      controller-revision-hash: plane-app-minio-wl-6cc7b76b5c
+      statefulset.kubernetes.io/pod-name: plane-app-minio-wl-0
+    name: plane-app-minio-wl-0
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: plane-app-minio-wl
+      uid: 2acf91b3-d89d-4b36-a822-70531bef076d
+    resourceVersion: "346188"
+    uid: 910f3b78-4e1b-408a-9945-ae0cb628640d
+  spec:
+    containers:
+    - args:
+      - server
+      - /data
+      - --console-address
+      - :9090
+      envFrom:
+      - configMapRef:
+          name: plane-app-doc-store-vars
+          optional: false
+      - secretRef:
+          name: plane-app-doc-store-secrets
+          optional: false
+      image: quay.io/p_lokanath/minio:latest
+      imagePullPolicy: IfNotPresent
+      name: plane-app-minio
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /data
+        name: pvc-plane-app-minio-vol
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-jlfhl
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: plane-app-minio-wl-0
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    subdomain: plane-app-minio
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: pvc-plane-app-minio-vol
+      persistentVolumeClaim:
+        claimName: pvc-plane-app-minio-vol-plane-app-minio-wl-0
+    - name: kube-api-access-jlfhl
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: '0/1 nodes are available: pod has unbound immediate PersistentVolumeClaims.
+        preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling..'
+      reason: Unschedulable
+      status: "False"
+      type: PodScheduled
+    phase: Pending
+    qosClass: BestEffort
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    generateName: plane-app-pgdb-wl-
+    labels:
+      app.name: plane-plane-app-pgdb
+      controller-revision-hash: plane-app-pgdb-wl-7bbb95449c
+      statefulset.kubernetes.io/pod-name: plane-app-pgdb-wl-0
+    name: plane-app-pgdb-wl-0
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: plane-app-pgdb-wl
+      uid: 03761794-19b8-42a2-ba17-8dfaf60a3d7a
+    resourceVersion: "345223"
+    uid: d4606551-b877-4e04-bf64-99dbc1c04dec
+  spec:
+    containers:
+    - env:
+      - name: PGDATA
+        value: /var/lib/postgresql/data/plane
+      envFrom:
+      - configMapRef:
+          name: plane-app-pgdb-vars
+          optional: false
+      - secretRef:
+          name: plane-app-pgdb-secrets
+          optional: false
+      image: quay.io/p_lokanath/postgres:16-alpine
+      imagePullPolicy: IfNotPresent
+      name: plane-app-pgdb
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/lib/postgresql/data
+        name: pvc-plane-app-pgdb-vol
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zrtwh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: plane-app-pgdb-wl-0
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    subdomain: plane-app-pgdb
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: pvc-plane-app-pgdb-vol
+      persistentVolumeClaim:
+        claimName: pvc-plane-app-pgdb-vol-plane-app-pgdb-wl-0
+    - name: kube-api-access-zrtwh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: '0/1 nodes are available: pod has unbound immediate PersistentVolumeClaims.
+        preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling..'
+      reason: Unschedulable
+      status: "False"
+      type: PodScheduled
+    phase: Pending
+    qosClass: BestEffort
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    generateName: plane-app-rabbitmq-wl-
+    labels:
+      app.name: plane-plane-app-rabbitmq
+      controller-revision-hash: plane-app-rabbitmq-wl-5b8fd747c6
+      statefulset.kubernetes.io/pod-name: plane-app-rabbitmq-wl-0
+    name: plane-app-rabbitmq-wl-0
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: plane-app-rabbitmq-wl
+      uid: 9284e96b-3118-4fab-8446-cbda3916faa7
+    resourceVersion: "346908"
+    uid: a2031e89-2dbd-4c2b-a006-5c6bb177a2e9
+  spec:
+    containers:
+    - envFrom:
+      - secretRef:
+          name: plane-app-rabbitmq-secrets
+          optional: false
+      image: quay.io/p_lokanath/rabbitmq:3.13.6-management-alpine
+      imagePullPolicy: IfNotPresent
+      name: plane-app-rabbitmq
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/lib/rabbitmq
+        name: pvc-plane-app-rabbitmq-vol
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-ht8d8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: plane-app-rabbitmq-wl-0
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    subdomain: plane-app-rabbitmq
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: pvc-plane-app-rabbitmq-vol
+      persistentVolumeClaim:
+        claimName: pvc-plane-app-rabbitmq-vol-plane-app-rabbitmq-wl-0
+    - name: kube-api-access-ht8d8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: '0/1 nodes are available: pod has unbound immediate PersistentVolumeClaims.
+        preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling..'
+      reason: Unschedulable
+      status: "False"
+      type: PodScheduled
+    phase: Pending
+    qosClass: BestEffort
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    generateName: plane-app-redis-wl-
+    labels:
+      app.name: plane-plane-app-redis
+      controller-revision-hash: plane-app-redis-wl-6745946d6b
+      statefulset.kubernetes.io/pod-name: plane-app-redis-wl-0
+    name: plane-app-redis-wl-0
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: plane-app-redis-wl
+      uid: 8f26ef3a-d3f7-46b3-8f3e-bb98aef27493
+    resourceVersion: "344214"
+    uid: fc390375-4ded-4b65-87aa-d4c37eeb25fe
+  spec:
+    containers:
+    - image: quay.io/p_lokanath/affine-img:redis
+      imagePullPolicy: IfNotPresent
+      name: plane-app-redis
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /data
+        name: pvc-plane-app-redis-vol
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-s48xh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: plane-app-redis-wl-0
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    subdomain: plane-app-redis
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: pvc-plane-app-redis-vol
+      persistentVolumeClaim:
+        claimName: pvc-plane-app-redis-vol-plane-app-redis-wl-0
+    - name: kube-api-access-s48xh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T11:51:47Z"
+      message: '0/1 nodes are available: pod has unbound immediate PersistentVolumeClaims.
+        preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling..'
+      reason: Unschedulable
+      status: "False"
+      type: PodScheduled
+    phase: Pending
+    qosClass: BestEffort
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.104/23"],"mac_address":"0a:58:0a:08:00:68","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.104/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.104"
+            ],
+            "mac": "0a:58:0a:08:00:68",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+      timestamp: 2024-10-09 07:51:46.748180348 -0400 EDT m=+1.094019448
+    creationTimestamp: "2024-10-09T12:25:32Z"
+    generateName: plane-app-space-wl-57fd49bbfb-
+    labels:
+      app.name: plane-plane-app-space
+      pod-template-hash: 57fd49bbfb
+    name: plane-app-space-wl-57fd49bbfb-rsdn9
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: plane-app-space-wl-57fd49bbfb
+      uid: 525283d2-0527-4064-98b1-fbe3520bc926
+    resourceVersion: "341922"
+    uid: 7c7a8f42-7861-434d-b319-277603e16994
+  spec:
+    containers:
+    - args:
+      - space/server.js
+      - space
+      command:
+      - node
+      image: quay.io/p_lokanath/plane-space:stable
+      imagePullPolicy: Always
+      name: plane-app-space
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1000Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-5wnbt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-5wnbt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:25:32Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:25:35Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:25:35Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:25:32Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://ab569675814fd22ff4f47a70d058a382173cd77b6f499dcc8df2c475a53ddce7
+      image: quay.io/p_lokanath/plane-space:stable
+      imageID: quay.io/p_lokanath/plane-space@sha256:a008d132b42c4148bf412ab8da0d9ce752483a966e1abe6a659a2ec2441f1e21
+      lastState: {}
+      name: plane-app-space
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-10-09T12:25:34Z"
+    hostIP: 192.168.50.10
+    phase: Running
+    podIP: 10.8.0.104
+    podIPs:
+    - ip: 10.8.0.104
+    qosClass: Burstable
+    startTime: "2024-10-09T12:25:32Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.79/23"],"mac_address":"0a:58:0a:08:00:4f","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.79/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.79"
+            ],
+            "mac": "0a:58:0a:08:00:4f",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+      timestamp: 2024-10-09 07:51:46.748144313 -0400 EDT m=+1.093983414
+    creationTimestamp: "2024-10-09T12:21:16Z"
+    generateName: plane-app-web-wl-5994f86fc8-
+    labels:
+      app.name: plane-plane-app-web
+      pod-template-hash: 5994f86fc8
+    name: plane-app-web-wl-5994f86fc8-lzwdb
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: plane-app-web-wl-5994f86fc8
+      uid: 0f04803d-38b9-406e-95fe-5b30a52396ef
+    resourceVersion: "339811"
+    uid: 84295d9c-795b-42a7-b2e3-e60f8a41e9af
+  spec:
+    containers:
+    - args:
+      - web/server.js
+      - web
+      command:
+      - node
+      image: quay.io/p_lokanath/plane-frontend:stable
+      imagePullPolicy: Always
+      name: plane-app-web
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1000Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-sw7b8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-sw7b8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:21:16Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:21:19Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:21:19Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:21:16Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://48075741ea96fb07cac093c15b8f89195734cef4ee1c420655aeabb0bda076c0
+      image: quay.io/p_lokanath/plane-frontend:stable
+      imageID: quay.io/p_lokanath/plane-frontend@sha256:32a19de4f4999ff732bf443e41aeeca87eac54b72ba0cd46932b5f7a8752fc27
+      lastState: {}
+      name: plane-app-web
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-10-09T12:21:19Z"
+    hostIP: 192.168.50.10
+    phase: Running
+    podIP: 10.8.0.79
+    podIPs:
+    - ip: 10.8.0.79
+    qosClass: Burstable
+    startTime: "2024-10-09T12:21:16Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.8.0.105/23"],"mac_address":"0a:58:0a:08:00:69","gateway_ips":["10.8.0.1"],"routes":[{"dest":"10.8.0.0/14","nextHop":"10.8.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.8.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.8.0.1"}],"ip_address":"10.8.0.105/23","gateway_ip":"10.8.0.1"}}'
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "ovn-kubernetes",
+            "interface": "eth0",
+            "ips": [
+                "10.8.0.105"
+            ],
+            "mac": "0a:58:0a:08:00:69",
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted-v2
+      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+      timestamp: 2024-10-09 07:51:46.748054422 -0400 EDT m=+1.093893525
+    creationTimestamp: "2024-10-09T12:26:49Z"
+    generateName: plane-app-worker-wl-594b49bf6f-
+    labels:
+      app.name: plane-plane-app-worker
+      pod-template-hash: 594b49bf6f
+    name: plane-app-worker-wl-594b49bf6f-v4h24
+    namespace: plane
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: plane-app-worker-wl-594b49bf6f
+      uid: e3cb761e-477b-48b8-acad-5eb29f73ffa3
+    resourceVersion: "349028"
+    uid: 14bba2e4-2889-4da4-9f55-7007513bd5c1
+  spec:
+    containers:
+    - command:
+      - ./bin/docker-entrypoint-worker.sh
+      envFrom:
+      - configMapRef:
+          name: plane-app-app-vars
+          optional: false
+      - secretRef:
+          name: plane-app-app-secrets
+          optional: false
+      - configMapRef:
+          name: plane-app-doc-store-vars
+          optional: false
+      - secretRef:
+          name: plane-app-doc-store-secrets
+          optional: false
+      image: quay.io/p_lokanath/plane-backend:stable
+      imagePullPolicy: Always
+      name: plane-app-worker
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1000Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000710000
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      tty: true
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dbjkt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: plane-app-srv-account-dockercfg-x2p9k
+    nodeName: master01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000710000
+      seLinuxOptions:
+        level: s0:c27,c4
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: plane-app-srv-account
+    serviceAccountName: plane-app-srv-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-dbjkt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:26:49Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:40:46Z"
+      message: 'containers with unready status: [plane-app-worker]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:40:46Z"
+      message: 'containers with unready status: [plane-app-worker]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-09T12:26:49Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://95debdf53da92a7fa4f69486022d074603e686d31fc5ad77732017cd458de547
+      image: quay.io/p_lokanath/plane-backend:stable
+      imageID: quay.io/p_lokanath/plane-backend@sha256:55a6f4dc8aa944ee9ad397559778c13df97725b3d96db9ef594a1b31eeed7bbf
+      lastState:
+        terminated:
+          containerID: cri-o://95debdf53da92a7fa4f69486022d074603e686d31fc5ad77732017cd458de547
+          exitCode: 1
+          finishedAt: "2024-10-09T12:40:45Z"
+          reason: Error
+          startedAt: "2024-10-09T12:40:27Z"
+      name: plane-app-worker
+      ready: false
+      restartCount: 7
+      started: false
+      state:
+        waiting:
+          message: back-off 5m0s restarting failed container=plane-app-worker pod=plane-app-worker-wl-594b49bf6f-v4h24_plane(14bba2e4-2889-4da4-9f55-7007513bd5c1)
+          reason: CrashLoopBackOff
+    hostIP: 192.168.50.10
+    phase: Running
+    podIP: 10.8.0.105
+    podIPs:
+    - ip: 10.8.0.105
+    qosClass: Burstable
+    startTime: "2024-10-09T12:26:49Z"
+kind: List
+metadata:
+  resourceVersion: ""

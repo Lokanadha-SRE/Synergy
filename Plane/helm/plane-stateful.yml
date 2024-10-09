@@ -1,0 +1,350 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-app
+      meta.helm.sh/release-namespace: plane
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-app-minio-wl
+    namespace: plane
+    resourceVersion: "325928"
+    uid: 2acf91b3-d89d-4b36-a822-70531bef076d
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-plane-app-minio
+    serviceName: plane-app-minio
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app.name: plane-plane-app-minio
+      spec:
+        containers:
+        - args:
+          - server
+          - /data
+          - --console-address
+          - :9090
+          envFrom:
+          - configMapRef:
+              name: plane-app-doc-store-vars
+              optional: false
+          - secretRef:
+              name: plane-app-doc-store-secrets
+              optional: false
+          image: minio/minio:latest
+          imagePullPolicy: IfNotPresent
+          name: plane-app-minio
+          resources: {}
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+          volumeMounts:
+          - mountPath: /data
+            name: pvc-plane-app-minio-vol
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-app-srv-account
+        serviceAccountName: plane-app-srv-account
+        terminationGracePeriodSeconds: 30
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: pvc-plane-app-minio-vol
+        namespace: plane
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: longhorn
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 0
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: plane-app-minio-wl-6cc7b76b5c
+    observedGeneration: 1
+    replicas: 1
+    updateRevision: plane-app-minio-wl-6cc7b76b5c
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-app
+      meta.helm.sh/release-namespace: plane
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-app-pgdb-wl
+    namespace: plane
+    resourceVersion: "353455"
+    uid: 03761794-19b8-42a2-ba17-8dfaf60a3d7a
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-plane-app-pgdb
+    serviceName: plane-app-pgdb
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app.name: plane-plane-app-pgdb
+      spec:
+        containers:
+        - env:
+          - name: PGDATA
+            value: /var/lib/postgresql/data/plane
+          envFrom:
+          - configMapRef:
+              name: plane-app-pgdb-vars
+              optional: false
+          - secretRef:
+              name: plane-app-pgdb-secrets
+              optional: false
+          image: quay.io/p_lokanath/postgres:16-alpine
+          imagePullPolicy: IfNotPresent
+          name: plane-app-pgdb
+          resources: {}
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: pvc-plane-app-pgdb-vol
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-app-srv-account
+        serviceAccountName: plane-app-srv-account
+        terminationGracePeriodSeconds: 30
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: pvc-plane-app-pgdb-vol
+        namespace: plane
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: longhorn
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 0
+    collisionCount: 0
+    currentRevision: plane-app-pgdb-wl-7bbb95449c
+    observedGeneration: 2
+    replicas: 1
+    updateRevision: plane-app-pgdb-wl-85b4d87d88
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-app
+      meta.helm.sh/release-namespace: plane
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-app-rabbitmq-wl
+    namespace: plane
+    resourceVersion: "325929"
+    uid: 9284e96b-3118-4fab-8446-cbda3916faa7
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-plane-app-rabbitmq
+    serviceName: plane-app-rabbitmq
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app.name: plane-plane-app-rabbitmq
+      spec:
+        containers:
+        - envFrom:
+          - secretRef:
+              name: plane-app-rabbitmq-secrets
+              optional: false
+          image: rabbitmq:3.13.6-management-alpine
+          imagePullPolicy: IfNotPresent
+          name: plane-app-rabbitmq
+          resources: {}
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+          volumeMounts:
+          - mountPath: /var/lib/rabbitmq
+            name: pvc-plane-app-rabbitmq-vol
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-app-srv-account
+        serviceAccountName: plane-app-srv-account
+        terminationGracePeriodSeconds: 30
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: pvc-plane-app-rabbitmq-vol
+        namespace: plane
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Mi
+        storageClassName: longhorn
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 0
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: plane-app-rabbitmq-wl-5b8fd747c6
+    observedGeneration: 1
+    replicas: 1
+    updateRevision: plane-app-rabbitmq-wl-5b8fd747c6
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-app
+      meta.helm.sh/release-namespace: plane
+    creationTimestamp: "2024-10-09T11:51:47Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-app-redis-wl
+    namespace: plane
+    resourceVersion: "325922"
+    uid: 8f26ef3a-d3f7-46b3-8f3e-bb98aef27493
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-plane-app-redis
+    serviceName: plane-app-redis
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app.name: plane-plane-app-redis
+      spec:
+        containers:
+        - image: valkey/valkey:7.2.5-alpine
+          imagePullPolicy: IfNotPresent
+          name: plane-app-redis
+          resources: {}
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+          volumeMounts:
+          - mountPath: /data
+            name: pvc-plane-app-redis-vol
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-app-srv-account
+        serviceAccountName: plane-app-srv-account
+        terminationGracePeriodSeconds: 30
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: pvc-plane-app-redis-vol
+        namespace: plane
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Mi
+        storageClassName: longhorn
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 0
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: plane-app-redis-wl-6745946d6b
+    observedGeneration: 1
+    replicas: 1
+    updateRevision: plane-app-redis-wl-6745946d6b
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
