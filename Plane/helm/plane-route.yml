@@ -1,0 +1,144 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: web-route
+  namespace: plane
+spec:
+  host: plane.apps.ocp4.example.com
+  path: /
+  to:
+    kind: Service
+    name: web
+  port:
+    targetPort: 3000
+  tls:
+    termination: edge
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: api-route
+  namespace: plane
+spec:
+  host: plane.apps.ocp4.example.com
+  path: /api
+  to:
+    kind: Service
+    name: api
+  port:
+    targetPort: 8000
+  tls:
+    termination: edge
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: auth-route
+  namespace: plane
+spec:
+  host: plane.apps.ocp4.example.com
+  path: /auth
+  to:
+    kind: Service
+    name: api
+  port:
+    targetPort: 8000
+  tls:
+    termination: edge
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: live-route
+  namespace: plane
+spec:
+  host: plane.apps.ocp4.example.com
+  path: /live
+  to:
+    kind: Service
+    name: live
+  port:
+    targetPort: 3000
+  tls:
+    termination: edge
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: spaces-route
+  namespace: plane
+spec:
+  host: plane.apps.ocp4.example.com
+  path: /spaces
+  to:
+    kind: Service
+    name: space
+  port:
+    targetPort: 3000
+  tls:
+    termination: edge
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: god-mode-route
+  namespace: plane
+spec:
+  host: plane.apps.ocp4.example.com
+  path: /god-mode
+  to:
+    kind: Service
+    name: admin
+  port:
+    targetPort: 3000
+  tls:
+    termination: edge
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: minio-uploads-route
+  namespace: plane
+spec:
+  host: plane.apps.ocp4.example.com
+  path: /uploads
+  to:
+    kind: Service
+    name: plane-minio
+  port:
+    targetPort: 9000
+  tls:
+    termination: edge
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: minio-route
+  namespace: plane
+spec:
+  host: plane-minio.apps.ocp4.example.com
+  path: /
+  to:
+    kind: Service
+    name: plane-minio
+  port:
+    targetPort: 9090
+  tls:
+    termination: edge
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mq-route
+  namespace: plane
+spec:
+  host: plane-rabbitmq.apps.ocp4.example.com
+  path: /
+  to:
+    kind: Service
+    name: plane-mq
+  port:
+    targetPort: 15672
+  tls:
+    termination: edge
