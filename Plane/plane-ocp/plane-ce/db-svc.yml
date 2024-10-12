@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: plane-app
+    meta.helm.sh/release-namespace: plane-app
+  creationTimestamp: "2024-10-12T13:38:49Z"
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.name: plane-app-plane-app-pgdb
+  name: plane-app-pgdb
+  namespace: plane-app
+  resourceVersion: "953708"
+  uid: a3abece7-d12c-48f5-b629-3ebf31097dc3
+spec:
+  clusterIP: None
+  clusterIPs:
+  - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: pg-5432
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app.name: plane-app-plane-app-pgdb
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
