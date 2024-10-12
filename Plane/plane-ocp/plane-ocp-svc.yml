@@ -1,0 +1,310 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      app.name: plane-app-plane-dev-admin
+    name: plane-dev-admin
+    namespace: plane-app
+    resourceVersion: "968679"
+    uid: af26e70c-3fac-4ace-8883-700c90dbf6b7
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: admin-3000
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app.name: plane-app-plane-dev-admin
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      app.name: plane-app-plane-dev-api
+    name: plane-dev-api
+    namespace: plane-app
+    resourceVersion: "968675"
+    uid: 78b27a15-0e48-4411-afa7-7ced22ea1bcb
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: api-8000
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
+    selector:
+      app.name: plane-app-plane-dev-api
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      app.name: plane-app-plane-dev-live
+    name: plane-dev-live
+    namespace: plane-app
+    resourceVersion: "968682"
+    uid: e9fb35e5-b8be-45d3-957c-3c9387845939
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: live-3000
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app.name: plane-app-plane-dev-live
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      app.name: plane-app-plane-dev-minio
+    name: plane-dev-minio
+    namespace: plane-app
+    resourceVersion: "968674"
+    uid: e801c4c2-7d8d-431d-8b94-eff2fc476eb0
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: minio-api-9000
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    - name: minio-console-9090
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
+    selector:
+      app.name: plane-app-plane-dev-minio
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      app.name: plane-app-plane-dev-pgdb
+    name: plane-dev-pgdb
+    namespace: plane-app
+    resourceVersion: "968677"
+    uid: f0a52786-cf89-4d18-bb15-2528889cb99d
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: pg-5432
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app.name: plane-app-plane-dev-pgdb
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      app.name: plane-app-plane-dev-rabbitmq
+    name: plane-dev-rabbitmq
+    namespace: plane-app
+    resourceVersion: "968681"
+    uid: 86e1078f-aef1-4403-b542-51c5d16a49fb
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: rabbitmq-5672
+      port: 5672
+      protocol: TCP
+      targetPort: 5672
+    - name: rabbitmq-mgmt-15672
+      port: 15672
+      protocol: TCP
+      targetPort: 15672
+    selector:
+      app.name: plane-app-plane-dev-rabbitmq
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      app.name: plane-app-plane-dev-redis
+    name: plane-dev-redis
+    namespace: plane-app
+    resourceVersion: "968676"
+    uid: 088d3066-4864-4790-8433-410d398f9336
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: redis-6379
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+    selector:
+      app.name: plane-app-plane-dev-redis
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      app.name: plane-app-plane-dev-space
+    name: plane-dev-space
+    namespace: plane-app
+    resourceVersion: "968680"
+    uid: 54c0682f-bbfd-41e9-a28a-17b7fb08fa0d
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: space-3000
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app.name: plane-app-plane-dev-space
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      app.name: plane-app-plane-dev-web
+    name: plane-dev-web
+    namespace: plane-app
+    resourceVersion: "968678"
+    uid: d9fe19ec-11dd-4474-8127-e1c1335b9ec9
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: web-3000
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app.name: plane-app-plane-dev-web
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""

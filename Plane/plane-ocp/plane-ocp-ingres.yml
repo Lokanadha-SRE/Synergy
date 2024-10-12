@@ -1,0 +1,98 @@
+apiVersion: v1
+items:
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+      nginx.ingress.kubernetes.io/proxy-body-size: 5m
+    creationTimestamp: "2024-10-12T14:08:00Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-ingress
+    namespace: plane-app
+    resourceVersion: "972656"
+    uid: 9a502783-ca52-496d-b458-2c958ca3a0bc
+  spec:
+    rules:
+    - host: plane.apps.ocp4.example.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: plane-dev-web
+              port:
+                number: 3000
+          path: /
+          pathType: Prefix
+        - backend:
+            service:
+              name: plane-dev-api
+              port:
+                number: 8000
+          path: /api
+          pathType: Prefix
+        - backend:
+            service:
+              name: plane-dev-api
+              port:
+                number: 8000
+          path: /auth
+          pathType: Prefix
+        - backend:
+            service:
+              name: plane-dev-live
+              port:
+                number: 3000
+          path: /live/
+          pathType: Prefix
+        - backend:
+            service:
+              name: plane-dev-space
+              port:
+                number: 3000
+          path: /spaces
+          pathType: Prefix
+        - backend:
+            service:
+              name: plane-dev-admin
+              port:
+                number: 3000
+          path: /god-mode
+          pathType: Prefix
+        - backend:
+            service:
+              name: plane-dev-minio
+              port:
+                number: 9000
+          path: /uploads
+          pathType: Prefix
+    - host: plane-minio.apps.ocp4.example.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: plane-dev-minio
+              port:
+                number: 9090
+          path: /
+          pathType: Prefix
+    - host: plane-rabbitmq.apps.ocp4.example.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: plane-dev-rabbitmq
+              port:
+                number: 15672
+          path: /
+          pathType: Prefix
+  status:
+    loadBalancer:
+      ingress:
+      - hostname: router-default.apps.ocp4.example.com
+kind: List
+metadata:
+  resourceVersion: ""

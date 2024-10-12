@@ -1,0 +1,78 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  imagePullSecrets:
+  - name: builder-dockercfg-dfpxr
+  kind: ServiceAccount
+  metadata:
+    creationTimestamp: "2024-10-12T09:51:57Z"
+    name: builder
+    namespace: plane-app
+    resourceVersion: "849430"
+    uid: eabead57-625d-4980-a026-fd7358a0e212
+  secrets:
+  - name: builder-dockercfg-dfpxr
+- apiVersion: v1
+  imagePullSecrets:
+  - name: default-dockercfg-tngxd
+  kind: ServiceAccount
+  metadata:
+    creationTimestamp: "2024-10-12T09:51:57Z"
+    name: default
+    namespace: plane-app
+    resourceVersion: "849428"
+    uid: feb56097-62f5-44da-bf96-e7d31bd2bc4e
+  secrets:
+  - name: default-dockercfg-tngxd
+- apiVersion: v1
+  imagePullSecrets:
+  - name: deployer-dockercfg-6pjj8
+  kind: ServiceAccount
+  metadata:
+    creationTimestamp: "2024-10-12T09:51:57Z"
+    name: deployer
+    namespace: plane-app
+    resourceVersion: "849425"
+    uid: 6b165e22-702c-49d2-9274-783cbd49bf0d
+  secrets:
+  - name: deployer-dockercfg-6pjj8
+- apiVersion: v1
+  imagePullSecrets:
+  - name: pipeline-dockercfg-2lxrc
+  kind: ServiceAccount
+  metadata:
+    creationTimestamp: "2024-10-12T09:51:57Z"
+    name: pipeline
+    namespace: plane-app
+    ownerReferences:
+    - apiVersion: operator.tekton.dev/v1alpha1
+      blockOwnerDeletion: true
+      controller: true
+      kind: TektonConfig
+      name: config
+      uid: 099c77e7-a5c6-4691-a5c2-49e4620309de
+    resourceVersion: "849445"
+    uid: 37e142d7-2815-470e-9602-01044f8d2188
+  secrets:
+  - name: pipeline-dockercfg-2lxrc
+- apiVersion: v1
+  automountServiceAccountToken: true
+  imagePullSecrets:
+  - name: plane-dev-srv-account-dockercfg-l4z9g
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-srv-account
+    namespace: plane-app
+    resourceVersion: "968713"
+    uid: 86a2ee6d-1f6f-4e3e-b706-7b7358a7a808
+  secrets:
+  - name: plane-dev-srv-account-dockercfg-l4z9g
+kind: List
+metadata:
+  resourceVersion: ""

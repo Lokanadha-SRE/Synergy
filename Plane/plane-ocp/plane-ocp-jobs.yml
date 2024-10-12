@@ -1,0 +1,160 @@
+apiVersion: v1
+items:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    annotations:
+      batch.kubernetes.io/job-tracking: ""
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-api-migrate-1
+    namespace: plane-app
+    resourceVersion: "969112"
+    uid: f175f2bb-9cab-475a-b359-2d5b8a0c26b2
+  spec:
+    backoffLimit: 3
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        batch.kubernetes.io/controller-uid: f175f2bb-9cab-475a-b359-2d5b8a0c26b2
+    suspend: false
+    template:
+      metadata:
+        annotations:
+          timestamp: 2024-10-12 10:07:58.689499594 -0400 EDT m=+0.172833295
+        creationTimestamp: null
+        labels:
+          app.name: plane-app-plane-dev-api-migrate
+          batch.kubernetes.io/controller-uid: f175f2bb-9cab-475a-b359-2d5b8a0c26b2
+          batch.kubernetes.io/job-name: plane-dev-api-migrate-1
+          controller-uid: f175f2bb-9cab-475a-b359-2d5b8a0c26b2
+          job-name: plane-dev-api-migrate-1
+      spec:
+        containers:
+        - command:
+          - ./bin/docker-entrypoint-migrator.sh
+          envFrom:
+          - configMapRef:
+              name: plane-dev-app-vars
+              optional: false
+          - secretRef:
+              name: plane-dev-app-secrets
+              optional: false
+          - configMapRef:
+              name: plane-dev-doc-store-vars
+              optional: false
+          - secretRef:
+              name: plane-dev-doc-store-secrets
+              optional: false
+          image: quay.io/p_lokanath/plane-backend:stable
+          imagePullPolicy: Always
+          name: plane-dev-api-migrate
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: OnFailure
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-dev-srv-account
+        serviceAccountName: plane-dev-srv-account
+        terminationGracePeriodSeconds: 30
+  status:
+    completionTime: "2024-10-12T14:08:16Z"
+    conditions:
+    - lastProbeTime: "2024-10-12T14:08:16Z"
+      lastTransitionTime: "2024-10-12T14:08:16Z"
+      status: "True"
+      type: Complete
+    ready: 0
+    startTime: "2024-10-12T14:07:59Z"
+    succeeded: 1
+    uncountedTerminatedPods: {}
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    annotations:
+      batch.kubernetes.io/job-tracking: ""
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-minio-bucket
+    namespace: plane-app
+    resourceVersion: "968830"
+    uid: 21161418-6abe-4058-bffe-6d17c250b3c1
+  spec:
+    backoffLimit: 6
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        batch.kubernetes.io/controller-uid: 21161418-6abe-4058-bffe-6d17c250b3c1
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          batch.kubernetes.io/controller-uid: 21161418-6abe-4058-bffe-6d17c250b3c1
+          batch.kubernetes.io/job-name: plane-dev-minio-bucket
+          controller-uid: 21161418-6abe-4058-bffe-6d17c250b3c1
+          job-name: plane-dev-minio-bucket
+        namespace: plane-app
+      spec:
+        containers:
+        - args:
+          - -c
+          - /usr/bin/mc config host add plane-app-minio http://plane-dev-minio.plane-app.svc.cluster.local:9000
+            "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY";  /usr/bin/mc mb plane-app-minio/$AWS_S3_BUCKET_NAME;  /usr/bin/mc
+            anonymous set download plane-app-minio/$AWS_S3_BUCKET_NAME; exit 0;
+          command:
+          - /bin/sh
+          envFrom:
+          - configMapRef:
+              name: plane-dev-doc-store-vars
+              optional: false
+          - secretRef:
+              name: plane-dev-doc-store-secrets
+              optional: false
+          image: minio/mc
+          imagePullPolicy: IfNotPresent
+          name: plane-dev-minio-bucket
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - until nslookup  plane-dev-minio.plane-app.svc.cluster.local; do echo waiting
+            for  plane-dev-minio; sleep 2; done
+          image: busybox
+          imagePullPolicy: Always
+          name: init
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        restartPolicy: OnFailure
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-dev-srv-account
+        serviceAccountName: plane-dev-srv-account
+        terminationGracePeriodSeconds: 120
+  status:
+    active: 1
+    ready: 0
+    startTime: "2024-10-12T14:08:00Z"
+    uncountedTerminatedPods: {}
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,621 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-admin-wl
+    namespace: plane-app
+    resourceVersion: "969011"
+    uid: 4e3ff22e-ad85-4720-b1a5-ccd63c158f34
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-app-plane-dev-admin
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          timestamp: 2024-10-12 10:07:58.689724509 -0400 EDT m=+0.173058203
+        creationTimestamp: null
+        labels:
+          app.name: plane-app-plane-dev-admin
+        namespace: plane-app
+      spec:
+        containers:
+        - args:
+          - admin/server.js
+          - admin
+          command:
+          - node
+          image: quay.io/p_lokanath/plane-admin:stable
+          imagePullPolicy: Always
+          name: plane-dev-admin
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-dev-srv-account
+        serviceAccountName: plane-dev-srv-account
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-10-12T14:08:04Z"
+      lastUpdateTime: "2024-10-12T14:08:04Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-10-12T14:07:59Z"
+      lastUpdateTime: "2024-10-12T14:08:04Z"
+      message: ReplicaSet "plane-dev-admin-wl-575dcc878c" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-api-wl
+    namespace: plane-app
+    resourceVersion: "969525"
+    uid: bcc1a8ee-46b8-46c5-8d6c-524d1b22b6b8
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-app-plane-dev-api
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          timestamp: 2024-10-12 10:07:58.689650157 -0400 EDT m=+0.172983849
+        creationTimestamp: null
+        labels:
+          app.name: plane-app-plane-dev-api
+        namespace: plane-app
+      spec:
+        containers:
+        - command:
+          - ./bin/docker-entrypoint-api.sh
+          envFrom:
+          - configMapRef:
+              name: plane-dev-app-vars
+              optional: false
+          - secretRef:
+              name: plane-dev-app-secrets
+              optional: false
+          - configMapRef:
+              name: plane-dev-doc-store-vars
+              optional: false
+          - secretRef:
+              name: plane-dev-doc-store-secrets
+              optional: false
+          image: quay.io/p_lokanath/plane-backend:stable
+          imagePullPolicy: Always
+          name: plane-dev-api
+          readinessProbe:
+            failureThreshold: 30
+            httpGet:
+              path: /
+              port: 8000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-dev-srv-account
+        serviceAccountName: plane-dev-srv-account
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-10-12T14:09:10Z"
+      lastUpdateTime: "2024-10-12T14:09:10Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-10-12T14:07:59Z"
+      lastUpdateTime: "2024-10-12T14:09:10Z"
+      message: ReplicaSet "plane-dev-api-wl-5f47f598d8" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-beat-worker-wl
+    namespace: plane-app
+    resourceVersion: "969007"
+    uid: 58ff999c-8599-4d99-ab6b-c062a26b5948
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-app-plane-dev-beat-worker
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          timestamp: 2024-10-12 10:07:58.689587477 -0400 EDT m=+0.172921172
+        creationTimestamp: null
+        labels:
+          app.name: plane-app-plane-dev-beat-worker
+        namespace: plane-app
+      spec:
+        containers:
+        - command:
+          - ./bin/docker-entrypoint-beat.sh
+          envFrom:
+          - configMapRef:
+              name: plane-dev-app-vars
+              optional: false
+          - secretRef:
+              name: plane-dev-app-secrets
+              optional: false
+          - configMapRef:
+              name: plane-dev-doc-store-vars
+              optional: false
+          - secretRef:
+              name: plane-dev-doc-store-secrets
+              optional: false
+          image: quay.io/p_lokanath/plane-backend:stable
+          imagePullPolicy: Always
+          name: plane-dev-beat-worker
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-dev-srv-account
+        serviceAccountName: plane-dev-srv-account
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-10-12T14:08:04Z"
+      lastUpdateTime: "2024-10-12T14:08:04Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-10-12T14:07:59Z"
+      lastUpdateTime: "2024-10-12T14:08:04Z"
+      message: ReplicaSet "plane-dev-beat-worker-wl-58f9c4d675" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-live-wl
+    namespace: plane-app
+    resourceVersion: "968992"
+    uid: dc75d1ea-5196-400d-9af7-649c71524334
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-app-plane-dev-live
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          timestamp: 2024-10-12 10:07:58.68954511 -0400 EDT m=+0.172878807
+        creationTimestamp: null
+        labels:
+          app.name: plane-app-plane-dev-live
+        namespace: plane-app
+      spec:
+        containers:
+        - args:
+          - live/dist/server.js
+          command:
+          - node
+          envFrom:
+          - configMapRef:
+              name: plane-dev-live-vars
+              optional: false
+          image: quay.io/p_lokanath/plane-live:stable
+          imagePullPolicy: Always
+          name: plane-dev-live
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-dev-srv-account
+        serviceAccountName: plane-dev-srv-account
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-10-12T14:08:03Z"
+      lastUpdateTime: "2024-10-12T14:08:03Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-10-12T14:07:59Z"
+      lastUpdateTime: "2024-10-12T14:08:03Z"
+      message: ReplicaSet "plane-dev-live-wl-5c95df586d" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-space-wl
+    namespace: plane-app
+    resourceVersion: "969693"
+    uid: 1a37c01f-2385-4cc3-8494-3a4d774b0688
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-app-plane-dev-space
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          timestamp: 2024-10-12 10:07:58.68919095 -0400 EDT m=+0.172524645
+        creationTimestamp: null
+        labels:
+          app.name: plane-app-plane-dev-space
+        namespace: plane-app
+      spec:
+        containers:
+        - args:
+          - space/server.js
+          - space
+          command:
+          - node
+          image: quay.io/p_lokanath/plane-space:stable
+          imagePullPolicy: Always
+          name: plane-dev-space
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-dev-srv-account
+        serviceAccountName: plane-dev-srv-account
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-10-12T14:09:27Z"
+      lastUpdateTime: "2024-10-12T14:09:27Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-10-12T14:07:59Z"
+      lastUpdateTime: "2024-10-12T14:09:27Z"
+      message: ReplicaSet "plane-dev-space-wl-855c6fc56b" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-web-wl
+    namespace: plane-app
+    resourceVersion: "968983"
+    uid: c973728b-1920-4d62-b825-5cbb987dced7
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-app-plane-dev-web
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          timestamp: 2024-10-12 10:07:58.689130264 -0400 EDT m=+0.172463969
+        creationTimestamp: null
+        labels:
+          app.name: plane-app-plane-dev-web
+        namespace: plane-app
+      spec:
+        containers:
+        - args:
+          - web/server.js
+          - web
+          command:
+          - node
+          image: quay.io/p_lokanath/plane-frontend:stable
+          imagePullPolicy: Always
+          name: plane-dev-web
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-dev-srv-account
+        serviceAccountName: plane-dev-srv-account
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-10-12T14:08:03Z"
+      lastUpdateTime: "2024-10-12T14:08:03Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-10-12T14:07:59Z"
+      lastUpdateTime: "2024-10-12T14:08:03Z"
+      message: ReplicaSet "plane-dev-web-wl-7cc87fbc69" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: plane-dev
+      meta.helm.sh/release-namespace: plane-app
+    creationTimestamp: "2024-10-12T14:07:59Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: plane-dev-worker-wl
+    namespace: plane-app
+    resourceVersion: "968985"
+    uid: 37652641-efd7-4750-8bfe-682216d8ddd1
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.name: plane-app-plane-dev-worker
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          timestamp: 2024-10-12 10:07:58.689004998 -0400 EDT m=+0.172338751
+        creationTimestamp: null
+        labels:
+          app.name: plane-app-plane-dev-worker
+        namespace: plane-app
+      spec:
+        containers:
+        - command:
+          - ./bin/docker-entrypoint-worker.sh
+          envFrom:
+          - configMapRef:
+              name: plane-dev-app-vars
+              optional: false
+          - secretRef:
+              name: plane-dev-app-secrets
+              optional: false
+          - configMapRef:
+              name: plane-dev-doc-store-vars
+              optional: false
+          - secretRef:
+              name: plane-dev-doc-store-secrets
+              optional: false
+          image: quay.io/p_lokanath/plane-backend:stable
+          imagePullPolicy: Always
+          name: plane-dev-worker
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: plane-dev-srv-account
+        serviceAccountName: plane-dev-srv-account
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-10-12T14:08:03Z"
+      lastUpdateTime: "2024-10-12T14:08:03Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-10-12T14:07:59Z"
+      lastUpdateTime: "2024-10-12T14:08:03Z"
+      message: ReplicaSet "plane-dev-worker-wl-6c8c4d797b" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
