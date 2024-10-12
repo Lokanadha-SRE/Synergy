@@ -3,95 +3,83 @@ items:
 - apiVersion: networking.k8s.io/v1
   kind: Ingress
   metadata:
-    annotations:
-      meta.helm.sh/release-name: plane-app
-      meta.helm.sh/release-namespace: plane
-      nginx.ingress.kubernetes.io/proxy-body-size: 5m
-    creationTimestamp: "2024-10-09T11:51:47Z"
-    generation: 1
-    labels:
-      app.kubernetes.io/managed-by: Helm
-    name: plane-app-ingress
-    namespace: plane
-    resourceVersion: "325910"
-    uid: d86e2065-fdf0-437c-a93b-bbb3bf3250e5
+    name: plane-ingress
   spec:
     ingressClassName: nginx
     rules:
-    - host: plane.example.com
+    - host: plane.apps.ocp4.example.com
       http:
         paths:
         - backend:
             service:
-              name: plane-app-web
+              name: web
               port:
                 number: 3000
           path: /
           pathType: Prefix
         - backend:
             service:
-              name: plane-app-api
+              name: api
               port:
                 number: 8000
           path: /api
           pathType: Prefix
         - backend:
             service:
-              name: plane-app-api
+              name: api
               port:
                 number: 8000
           path: /auth
           pathType: Prefix
         - backend:
             service:
-              name: plane-app-live
+              name: live
               port:
                 number: 3000
           path: /live/
           pathType: Prefix
         - backend:
             service:
-              name: plane-app-space
+              name: space
               port:
                 number: 3000
           path: /spaces
           pathType: Prefix
         - backend:
             service:
-              name: plane-app-admin
+              name: admin
               port:
                 number: 3000
           path: /god-mode
           pathType: Prefix
         - backend:
             service:
-              name: plane-app-minio
+              name: plane-minio
               port:
                 number: 9000
           path: /uploads
           pathType: Prefix
-    - host: plane-minio.example.com
+    - host: plane-minio.apps.ocp4.example.com
       http:
         paths:
         - backend:
             service:
-              name: plane-app-minio
+              name: plane-minio
               port:
                 number: 9090
           path: /
           pathType: Prefix
-    - host: plane-rabbitmq.example.com
+    - host: plane-rabbitmq.apps.ocp4.example.com
       http:
         paths:
         - backend:
             service:
-              name: plane-app-rabbitmq
+              name: plane-rabbitmq
               port:
                 number: 15672
           path: /
           pathType: Prefix
-  status:
-    loadBalancer: {}
+
 kind: List
 metadata:
   resourceVersion: ""
